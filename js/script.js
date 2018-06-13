@@ -1,6 +1,6 @@
 // event listener to respond to "Show another quote" button clicks
 // when user clicks anywhere on the button, the "printQuote" function is called
-document.getElementById('loadQuote').addEventListener("click", moveBar, false);
+document.getElementById('loadQuote').addEventListener("click", printQuote, false);
 
 //Message for browser console
 console.log('Below you will find a history of the random quotes and their corresponding index number');
@@ -10,16 +10,13 @@ var randomQuote;
 var previousRandomNumber = '';
 var loadingTime = 5000;
 var barWidth;
+var loadingBarHTML = '<div id="loading-bar" class="loading-bar"></div>';
 
 //inital loading bar function to run when page initially loads
 moveBar();
 
 //interval timer that calls loading bar function.
 window.setInterval(moveBar, loadingTime);
-
-if (barWidth === 100) {
-  printQuote();
-}
 
 /*Gets a random number between 0 and the parameter and returns the random number*/
 function getRandomNumber(numberOfQuotes) {
@@ -43,7 +40,6 @@ function printQuote() {
   if (randomQuote.hasOwnProperty('category')) {
     catagoryHTML = '<p class="category">' + randomQuote.category + '</p>';
   }
-  var loadingBarHTML = '<div id="loading-bar" class="loading-bar"></div>';
   //Constructs html string with catagory, quote, and source, all with proper html tags.
   var html = catagoryHTML + loadingBarHTML + '<p class="quote">' + randomQuote.quote + '</p>';
   html += '<p class="source">' + randomQuote.source;
@@ -69,6 +65,7 @@ function moveBar() {
     function frame() {
         if (barWidth >= 100) {
             clearInterval(id);
+            printQuote();
         } else {
             barWidth += .1;
             barLocation.style.width = barWidth + '%';
