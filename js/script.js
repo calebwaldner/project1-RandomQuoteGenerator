@@ -51,3 +51,5 @@ function printQuote() {
 
   console.log(html); //Shows history of quotes in console.
 }
+
+window.setInterval(printQuote, 5000);
