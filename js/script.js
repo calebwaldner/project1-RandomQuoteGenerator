@@ -47,7 +47,7 @@ function printQuote() {
   }
   html += '</p>';
 
-  document.getElementById('quote-box').innerHTML = html;
+  document.getElementById('quote-box').innerHTML = html; //Writes new html to the page
 
   console.log(html); //Shows history of quotes in console.
 }
