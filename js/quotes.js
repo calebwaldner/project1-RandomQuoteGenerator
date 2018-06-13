@@ -21,13 +21,6 @@ var quotes = [
   category : 'Proverb',
   },
   {
-  quote :'You can do anything, but not everything.',
-  source : 'David Allen',
-  citation : 'Making It All Work',
-  year : '2009',
-  category : 'Productivity',
-  },
-  {
   quote : 'Everything around you was made up by people who are no smarter than you.',
   source : 'Steve Jobs',
   citation : 'Interview with Santa Clara Valley Historical Association',

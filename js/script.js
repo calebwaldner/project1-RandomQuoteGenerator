@@ -7,10 +7,15 @@ console.log('Below you will find a history of the random quotes and their corres
 
 //Variables defined
 var randomQuote;
+var previousRandomNumber = '';
+
 
 /*Gets a random number between 0 and the parameter and returns the random number*/
 function getRandomNumber(numberOfQuotes) {
-  return Math.floor( Math.random() * numberOfQuotes);
+  do {var newRandomNumber = Math.floor( Math.random() * numberOfQuotes);
+  } while ( previousRandomNumber === newRandomNumber ); //ensures the random number is not a repeat
+  previousRandomNumber = newRandomNumber;
+  return newRandomNumber;
 }
 
 /*Gets a random quote by calling the getRandomNumber function with the argument being the max possible quotes from the array (quotes.length),
