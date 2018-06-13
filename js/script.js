@@ -1,6 +1,6 @@
 // event listener to respond to "Show another quote" button clicks
 // when user clicks anywhere on the button, the "printQuote" function is called
-document.getElementById('loadQuote').addEventListener("click", printQuote, false);
+document.getElementById('loadQuote').addEventListener("click", moveBar, false);
 
 //Message for browser console
 console.log('Below you will find a history of the random quotes and their corresponding index number');
@@ -8,7 +8,18 @@ console.log('Below you will find a history of the random quotes and their corres
 //Variables defined
 var randomQuote;
 var previousRandomNumber = '';
+var loadingTime = 5000;
+var barWidth;
 
+//inital loading bar function to run when page initially loads
+moveBar();
+
+//interval timer that calls loading bar function.
+window.setInterval(moveBar, loadingTime);
+
+if (barWidth === 100) {
+  printQuote();
+}
 
 /*Gets a random number between 0 and the parameter and returns the random number*/
 function getRandomNumber(numberOfQuotes) {
@@ -27,17 +38,15 @@ function getRandomQuote() {
 //Calls the getRandomQuote function and stores in variable.
 function printQuote() {
   randomQuote = getRandomQuote(); //stores random quote object in variable
-
   //Places catagory text at beginning of html string.
   var catagoryHTML = '';
   if (randomQuote.hasOwnProperty('category')) {
     catagoryHTML = '<p class="category">' + randomQuote.category + '</p>';
   }
-
+  var loadingBarHTML = '<div id="loading-bar" class="loading-bar"></div>';
   //Constructs html string with catagory, quote, and source, all with proper html tags.
-  var html = catagoryHTML + '<p class="quote">' + randomQuote.quote + '</p>';
+  var html = catagoryHTML + loadingBarHTML + '<p class="quote">' + randomQuote.quote + '</p>';
   html += '<p class="source">' + randomQuote.source;
-
   //Test to see if citation and year are present
   if (randomQuote.hasOwnProperty('citation')) {
     html += '<span class="citation">' + randomQuote.citation + '</span>';
@@ -46,10 +55,21 @@ function printQuote() {
     html += '<span class="year">' + randomQuote.year + '</span>';
   }
   html += '</p>';
-
   document.getElementById('quote-box').innerHTML = html;
-
   console.log(html); //Shows history of quotes in console.
 }
 
-window.setInterval(printQuote, 5000);
+//Creates the moving loading bar effect
+function moveBar() {
+    var barLocation = document.getElementById('loading-bar');
+    var id = setInterval(frame, (loadingTime/1000));
+    var barWidth = 1;
+    function frame() {
+        if (barWidth >= 100) {
+            clearInterval(id);
+        } else {
+            barWidth += .1;
+            barLocation.style.width = barWidth + '%';
+        }
+    }
+}

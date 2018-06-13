@@ -62,6 +62,12 @@ body {
   content: ", ";
   font-style: normal;
 }
+.loading-bar {
+  background-color: white;
+  opacity: .5;
+  height: 12px;
+  width: 1%;
+}
 
 #loadQuote {
   position: fixed;
