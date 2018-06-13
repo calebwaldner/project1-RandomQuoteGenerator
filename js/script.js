@@ -22,10 +22,18 @@ function getRandomQuote() {
 //Calls the getRandomQuote function and stores in variable.
 function printQuote() {
   randomQuote = getRandomQuote(); //stores random quote object in variable
-  var html = '<p class="quote">' + randomQuote.quote + '</p>';
+
+  //Places catagory text at beginning of html string.
+  var catagoryHTML = '';
+  if (randomQuote.hasOwnProperty('category')) {
+    catagoryHTML = '<p class="category">' + randomQuote.category + '</p>';
+  }
+
+  //Constructs html string with catagory, quote, and source, all with proper html tags.
+  var html = catagoryHTML + '<p class="quote">' + randomQuote.quote + '</p>';
   html += '<p class="source">' + randomQuote.source;
 
-//Test to see if citation and year are present
+  //Test to see if citation and year are present
   if (randomQuote.hasOwnProperty('citation')) {
     html += '<span class="citation">' + randomQuote.citation + '</span>';
   }
