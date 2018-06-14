@@ -6,11 +6,8 @@ document.getElementById('loadQuote').addEventListener("click", click, false);
 console.log('Below you will find a history of the random quotes and their corresponding index number');
 
 //Variables defined
-var randomQuote;
-var previousRandomNumber = '';
+var previousRandomNumber;
 var loadingTime = 10000;
-var barWidth;
-
 
 moveBar(); //inital loading bar function to run when page initially loads
 
@@ -37,7 +34,7 @@ function getRandomQuote() { //Reterns a random object (quote) from array based o
 }
 
 function printQuote() { //Prints random quote HTML.
-  randomQuote = getRandomQuote(); //stores random quote object in variable
+  var randomQuote = getRandomQuote(); //stores random quote object in variable
   var catagoryHTML = ''; //Places catagory text at beginning of html string.
   var loadingBarHTML = '<div id="loading-bar" class="loading-bar"></div>';
   if (randomQuote.hasOwnProperty('category')) {
