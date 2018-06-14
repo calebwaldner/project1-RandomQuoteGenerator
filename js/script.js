@@ -8,14 +8,10 @@ console.log('Below you will find a history of the random quotes and their corres
 //Variables defined
 var previousRandomNumber;
 var loadingTime = 10000;
+var intervalID;
 
 moveBar(); //inital loading bar function to run when page initially loads
-
-
-
-
-
-window.setInterval(click, loadingTime); //interval timer that calls loading bar function.
+intervalID = window.setInterval(click, loadingTime); //interval timer that calls loading bar function.
 
 
 
@@ -68,6 +64,8 @@ function moveBar() { //Creates the moving loading bar effect
 }
 
 function click () { //Function that prints the new quote and starts loading bar simultaneously
+  clearInterval(intervalID);
   printQuote();
   moveBar();
+  intervalID = window.setInterval(click, loadingTime);
 }
