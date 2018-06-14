@@ -10,7 +10,7 @@ var randomQuote;
 var previousRandomNumber = '';
 var loadingTime = 10000;
 var barWidth;
-var loadingBarHTML = '<div id="loading-bar" class="loading-bar"></div>';
+
 
 moveBar(); //inital loading bar function to run when page initially loads
 
@@ -36,9 +36,10 @@ function getRandomQuote() { //Reterns a random object (quote) from array based o
   return quotes[getRandomNumber(quotes.length)];
 }
 
-function printQuote() { //Calls the getRandomQuote function and stores in variable.
+function printQuote() { //Prints random quote HTML.
   randomQuote = getRandomQuote(); //stores random quote object in variable
   var catagoryHTML = ''; //Places catagory text at beginning of html string.
+  var loadingBarHTML = '<div id="loading-bar" class="loading-bar"></div>';
   if (randomQuote.hasOwnProperty('category')) {
     catagoryHTML = '<p class="category">' + randomQuote.category + '</p>';
   }
