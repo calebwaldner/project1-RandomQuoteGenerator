@@ -1,6 +1,6 @@
 // event listener to respond to "Show another quote" button clicks
 // when user clicks anywhere on the button, the "printQuote" function is called
-document.getElementById('loadQuote').addEventListener("click", printQuote, false);
+document.getElementById('loadQuote').addEventListener("click", click, false);
 
 //Message for browser console
 console.log('Below you will find a history of the random quotes and their corresponding index number');
@@ -8,30 +8,35 @@ console.log('Below you will find a history of the random quotes and their corres
 //Variables defined
 var randomQuote;
 var previousRandomNumber = '';
-var loadingTime = 5000;
+var loadingTime = 10000;
 var barWidth;
 var loadingBarHTML = '<div id="loading-bar" class="loading-bar"></div>';
 
 moveBar(); //inital loading bar function to run when page initially loads
 
-window.setInterval(moveBar, loadingTime); //interval timer that calls loading bar function.
 
-/*Gets a random number between 0 and the parameter and returns the random number*/
-function getRandomNumber(numberOfQuotes) {
+
+
+
+window.setInterval(click, loadingTime); //interval timer that calls loading bar function.
+
+
+
+
+
+
+function getRandomNumber(numberOfQuotes) { //Gets a random number between 0 and the parameter and returns the random number
   do {var newRandomNumber = Math.floor( Math.random() * numberOfQuotes);
   } while ( previousRandomNumber === newRandomNumber ); //ensures the random number is not a repeat
   previousRandomNumber = newRandomNumber;
   return newRandomNumber;
 }
 
-/*Gets a random quote by calling the getRandomNumber function with the argument being the max possible quotes from the array (quotes.length),
-selects the quote (or object) from the array based off the random number and returns it*/
-function getRandomQuote() {
+function getRandomQuote() { //Reterns a random object (quote) from array based off random number, argument is total objects (quotes) in array.
   return quotes[getRandomNumber(quotes.length)];
 }
 
-//Calls the getRandomQuote function and stores in variable.
-function printQuote() {
+function printQuote() { //Calls the getRandomQuote function and stores in variable.
   randomQuote = getRandomQuote(); //stores random quote object in variable
   var catagoryHTML = ''; //Places catagory text at beginning of html string.
   if (randomQuote.hasOwnProperty('category')) {
@@ -49,7 +54,7 @@ function printQuote() {
   document.getElementById('quote-box').innerHTML = html; //Writes new html to the page
   console.log(html); //Shows history of quotes in console.
 }
-  
+
 function moveBar() { //Creates the moving loading bar effect
     var barLocation = document.getElementById('loading-bar');
     var id = setInterval(frame, (loadingTime/1000));
@@ -57,10 +62,14 @@ function moveBar() { //Creates the moving loading bar effect
     function frame() {
         if (barWidth >= 100) {
             clearInterval(id);
-            printQuote();
         } else {
             barWidth += .1;
             barLocation.style.width = barWidth + '%';
         }
     }
+}
+
+function click () { //Function that prints the new quote and starts loading bar simultaneously
+  printQuote();
+  moveBar();
 }

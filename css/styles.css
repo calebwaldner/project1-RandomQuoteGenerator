@@ -65,7 +65,7 @@ body {
 .loading-bar {
   background-color: white;
   opacity: .5;
-  height: 12px;
+  height: 4px;
   width: 1%;
 }
 
