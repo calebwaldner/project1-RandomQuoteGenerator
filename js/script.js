@@ -12,11 +12,9 @@ var loadingTime = 5000;
 var barWidth;
 var loadingBarHTML = '<div id="loading-bar" class="loading-bar"></div>';
 
-//inital loading bar function to run when page initially loads
-moveBar();
+moveBar(); //inital loading bar function to run when page initially loads
 
-//interval timer that calls loading bar function.
-window.setInterval(moveBar, loadingTime);
+window.setInterval(moveBar, loadingTime); //interval timer that calls loading bar function.
 
 /*Gets a random number between 0 and the parameter and returns the random number*/
 function getRandomNumber(numberOfQuotes) {
@@ -35,30 +33,24 @@ function getRandomQuote() {
 //Calls the getRandomQuote function and stores in variable.
 function printQuote() {
   randomQuote = getRandomQuote(); //stores random quote object in variable
-  //Places catagory text at beginning of html string.
-  var catagoryHTML = '';
+  var catagoryHTML = ''; //Places catagory text at beginning of html string.
   if (randomQuote.hasOwnProperty('category')) {
     catagoryHTML = '<p class="category">' + randomQuote.category + '</p>';
   }
-  //Constructs html string with catagory, quote, and source, all with proper html tags.
-  var html = catagoryHTML + loadingBarHTML + '<p class="quote">' + randomQuote.quote + '</p>';
+  var html = catagoryHTML + loadingBarHTML + '<p class="quote">' + randomQuote.quote + '</p>'; //Constructs html string with catagory, quote, and source, all with proper html tags.
   html += '<p class="source">' + randomQuote.source;
-  //Test to see if citation and year are present
-  if (randomQuote.hasOwnProperty('citation')) {
+  if (randomQuote.hasOwnProperty('citation')) { //Test to see if citation and year are present
     html += '<span class="citation">' + randomQuote.citation + '</span>';
   }
   if (randomQuote.hasOwnProperty('year')) {
     html += '<span class="year">' + randomQuote.year + '</span>';
   }
   html += '</p>';
-
   document.getElementById('quote-box').innerHTML = html; //Writes new html to the page
-
   console.log(html); //Shows history of quotes in console.
 }
-
-//Creates the moving loading bar effect
-function moveBar() {
+  
+function moveBar() { //Creates the moving loading bar effect
     var barLocation = document.getElementById('loading-bar');
     var id = setInterval(frame, (loadingTime/1000));
     var barWidth = 1;
