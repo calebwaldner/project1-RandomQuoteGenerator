@@ -11,11 +11,12 @@ var loadingTime = 10000;
 var intervalID;
 
 moveBar(); //inital loading bar function to run when page initially loads
-intervalID = window.setInterval(click, loadingTime); //interval timer that calls loading bar function.
+intervalID = window.setInterval(click, loadingTime); //Initial interval timer that calls click function, continues to run until user clicks button
 
 
 
-
+///////////////ADD A FUNCTION THAT RESETS THE INTERVAL TIMER. INCLUDE CLEARINTERVAL AND NEW INTERVAL CODE IN ONE FUNCTION.
+//////////////CALL FUNCTION AT BEGINNING OF CODE TO START INITAL TIMER AND IN CLICK FUNCTION
 
 
 function getRandomNumber(numberOfQuotes) { //Gets a random number between 0 and the parameter and returns the random number
@@ -38,10 +39,10 @@ function printQuote() { //Prints random quote HTML.
   }
   var html = catagoryHTML + loadingBarHTML + '<p class="quote">' + randomQuote.quote + '</p>'; //Constructs html string with catagory, quote, and source, all with proper html tags.
   html += '<p class="source">' + randomQuote.source;
-  if (randomQuote.hasOwnProperty('citation')) { //Test to see if citation and year are present
+  if (randomQuote.hasOwnProperty('citation')) { //Test to see if citation is present
     html += '<span class="citation">' + randomQuote.citation + '</span>';
   }
-  if (randomQuote.hasOwnProperty('year')) {
+  if (randomQuote.hasOwnProperty('year')) { //Test to see if year is present
     html += '<span class="year">' + randomQuote.year + '</span>';
   }
   html += '</p>';
@@ -50,22 +51,26 @@ function printQuote() { //Prints random quote HTML.
 }
 
 function moveBar() { //Creates the moving loading bar effect
-    var barLocation = document.getElementById('loading-bar');
-    var id = setInterval(frame, (loadingTime/1000));
-    var barWidth = 1;
-    function frame() {
-        if (barWidth >= 100) {
-            clearInterval(id);
-        } else {
-            barWidth += .1;
-            barLocation.style.width = barWidth + '%';
+    var barLocation = document.getElementById('loading-bar'); //Locates loading bar, stores in variable
+    var id = setInterval(expand, (loadingTime/1000)); //Sets interval timer, stores interval ID in variable. Calls expand function 1000x during the course of the loadTime interval.
+    var barWidth = 0; //Resets bar width size to zero each time function is called
+    function expand() { //Adds to bar width until bar 100%
+        if (barWidth >= 100) { //Test to see if bar is equal or greater than 100%.
+            clearInterval(id); //If true, clears interval timer which stops running the expand function
+        } else { //If bar less than 100%, this code runs
+            barWidth += .1; //Bar width expand rate, stored in variable. expand function is called 1000x during the loadingTime and expands .1% each time. This creates a smoother bar.
+            barLocation.style.width = barWidth + '%'; //Edits the width styling of the varible barLocation
         }
     }
 }
 
+function newInterval() {
+  clearInterval(intervalID); //ends previous interval
+  intervalID = window.setInterval(click, loadingTime);
+}
+
 function click () { //Function that prints the new quote and starts loading bar simultaneously
-  clearInterval(intervalID);
+  newInterval();
   printQuote();
   moveBar();
-  intervalID = window.setInterval(click, loadingTime);
 }
