@@ -68,8 +68,7 @@ function newInterval() { //ends previous interval timer and begins a new one
 }
 
 function changeColor () {
-  var color = getColor();
-  document.body.style.backgroundColor = color;
+  document.body.style.backgroundColor = getColor();
 }
 
 function getColor() { //returns an object from the colorPalette varible
