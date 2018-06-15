@@ -6,8 +6,7 @@ document.getElementById('loadQuote').addEventListener("click", click, false);
 console.log('Below you will find a history of the random quotes and their corresponding index number');
 
 //Variables defined
-var quoteNumber;
-var colorNumber;
+var randomNumber = [0, 0];
 var loadingTime = 10000;
 var intervalID;
 var colorPalette = [ '#ff004f', '#0085b9', '#00b9c4', '#00df9f', '#ffe400'];
@@ -25,8 +24,8 @@ function getRandomNumber(maxNumber, dontRepeat) { //Gets a random number between
 
 
 function getRandomQuote() { //Reterns a random object (quote) from array.
-  quoteNumber = getRandomNumber(quotes.length, quoteNumber);//gets random number based off lenght of quote array and previous random number (so it doesnt repeat)
-  return quotes[quoteNumber];
+  randomNumber[0] = getRandomNumber(quotes.length, randomNumber[0]);//gets random number based off lenght of quote array and previous random number (so it doesnt repeat)
+  return quotes[randomNumber[0]];
 }
 
 function printQuote() { //Prints random quote HTML.
@@ -69,14 +68,14 @@ function newInterval() { //ends previous interval timer and begins a new one
 }
 
 function changeColor () {
-  document.body.style.backgroundColor = '#ffe400';
-  document.getElementById('loadQuote').style.backgroundColor = '#ffe400';
+  var color = getColor();
+  document.body.style.backgroundColor = color;
 }
 
-function getColor() {
-  colorNumber = getRandomNumber(colorPalette.length, colorNumber);//gets random number based off lenght of the color palette and previous random number (so it doesnt repeat)
-  console.log('color index number: ' + colorNumber);
-  return colorPalette[colorNumber];
+function getColor() { //returns an object from the colorPalette varible
+  randomNumber[1] = getRandomNumber(colorPalette.length, randomNumber[1]);//gets random number based off lenght of the color palette and previous random number (so it doesnt repeat)
+  console.log('color index number: ' + randomNumber[1]);
+  return colorPalette[randomNumber[1]];
 }
 
 function click () { //Function that prints the new quote and starts loading bar simultaneously
@@ -84,5 +83,4 @@ function click () { //Function that prints the new quote and starts loading bar 
   printQuote();
   moveBar();
   changeColor();
-  getColor();
 }
