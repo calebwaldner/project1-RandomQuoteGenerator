@@ -3,15 +3,14 @@
 document.getElementById('loadQuote').addEventListener("click", click, false);
 
 //Message for browser console
-console.log('Below you will find a history of the random quotes and their corresponding index number');
+console.log('Below you will find a history of the random quotes');
 
-//Variables defined
 var randomNumber = [0, 0];
 var loadingTime = 10000;
 var intervalID;
-var colorPalette = [ '#ff004f', '#0085b9', '#00b9c4', '#00df9f', '#ffe400'];
+var colorPalette = [ '#b55475', '#953735', '#dd7e0e', '#34ac8b', '#7153a1'];
 
-moveBar(); //inital loading bar function to run when page initially loads
+moveBar(); //initial loading bar function to run when page initially loads
 intervalID = window.setInterval(click, loadingTime); //Initial interval timer that calls click function, continues to run until user clicks button
 
 function getRandomNumber(maxNumber, dontRepeat) { //Gets a random number between 0 and the parameter and returns the random number
@@ -21,21 +20,19 @@ function getRandomNumber(maxNumber, dontRepeat) { //Gets a random number between
   return newRandomNumber;
 }
 
-
-
-function getRandomQuote() { //Reterns a random object (quote) from array.
-  randomNumber[0] = getRandomNumber(quotes.length, randomNumber[0]);//gets random number based off lenght of quote array and previous random number (so it doesnt repeat)
+function getRandomQuote() { //Returns a random object (quote) from array.
+  randomNumber[0] = getRandomNumber(quotes.length, randomNumber[0]);//gets random number based off length of quote array and previous random number (so it doesn’t repeat)
   return quotes[randomNumber[0]];
 }
 
 function printQuote() { //Prints random quote HTML.
   var randomQuote = getRandomQuote(); //stores random quote object in variable
-  var catagoryHTML = ''; //Places catagory text at beginning of html string.
+  var categoryHTML = ''; //Places category text at beginning of html string.
   var loadingBarHTML = '<div id="loading-bar" class="loading-bar"></div>';
   if (randomQuote.hasOwnProperty('category')) {
-    catagoryHTML = '<p class="category">' + randomQuote.category + '</p>';
+    categoryHTML = '<p class="category">' + randomQuote.category + '</p>';
   }
-  var html = catagoryHTML + loadingBarHTML + '<p class="quote">' + randomQuote.quote + '</p>'; //Constructs html string with catagory, quote, and source, all with proper html tags.
+  var html = categoryHTML + loadingBarHTML + '<p class="quote">' + randomQuote.quote + '</p>'; //Constructs html string with category, quote, and source, all with proper html tags.
   html += '<p class="source">' + randomQuote.source;
   if (randomQuote.hasOwnProperty('citation')) { //Test to see if citation is present
     html += '<span class="citation">' + randomQuote.citation + '</span>';
@@ -57,7 +54,7 @@ function moveBar() { //Creates the moving loading bar effect
             clearInterval(id); //If true, clears interval timer which stops running the expand function
         } else { //If bar less than 100%, this code runs
             barWidth += .1; //Bar width expand rate, stored in variable. expand function is called 1000x during the loadingTime and expands .1% each time. This creates a smoother bar.
-            barLocation.style.width = barWidth + '%'; //Edits the width styling of the varible barLocation
+            barLocation.style.width = barWidth + '%'; //Edits the width styling of the variable barLocation
         }
     }
 }
@@ -67,17 +64,17 @@ function newInterval() { //ends previous interval timer and begins a new one
   intervalID = window.setInterval(click, loadingTime);
 }
 
-function changeColor () {
+function changeColor () { //Changes color of body background
   document.body.style.backgroundColor = getColor();
 }
 
-function getColor() { //returns an object from the colorPalette varible
-  randomNumber[1] = getRandomNumber(colorPalette.length, randomNumber[1]);//gets random number based off lenght of the color palette and previous random number (so it doesnt repeat)
+function getColor() { //returns an object from the colorPalette variable
+  randomNumber[1] = getRandomNumber(colorPalette.length, randomNumber[1]);//gets random number based off length of the color palette and previous random number (so it doesn’t repeat)
   console.log('color index number: ' + randomNumber[1]);
   return colorPalette[randomNumber[1]];
 }
 
-function click () { //Function that prints the new quote and starts loading bar simultaneously
+function click () { //restarts interval timer, displays new quote, begins loading bar animation, and changes screen color, all simultaneously
   newInterval();
   printQuote();
   moveBar();
