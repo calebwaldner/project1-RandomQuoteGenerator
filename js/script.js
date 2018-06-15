@@ -13,12 +13,6 @@ var intervalID;
 moveBar(); //inital loading bar function to run when page initially loads
 intervalID = window.setInterval(click, loadingTime); //Initial interval timer that calls click function, continues to run until user clicks button
 
-
-
-///////////////ADD A FUNCTION THAT RESETS THE INTERVAL TIMER. INCLUDE CLEARINTERVAL AND NEW INTERVAL CODE IN ONE FUNCTION.
-//////////////CALL FUNCTION AT BEGINNING OF CODE TO START INITAL TIMER AND IN CLICK FUNCTION
-
-
 function getRandomNumber(numberOfQuotes) { //Gets a random number between 0 and the parameter and returns the random number
   do {var newRandomNumber = Math.floor( Math.random() * numberOfQuotes);
   } while ( previousRandomNumber === newRandomNumber ); //ensures the random number is not a repeat
@@ -64,13 +58,21 @@ function moveBar() { //Creates the moving loading bar effect
     }
 }
 
-function newInterval() {
+function newInterval() { //ends previous interval timer and begins a new one
   clearInterval(intervalID); //ends previous interval
   intervalID = window.setInterval(click, loadingTime);
 }
+
+function changeColor () {
+  document.body.style.backgroundColor = 'yellow';
+  document.getElementById('loadQuote').style.backgroundColor = 'yellow';
+}
+
+
 
 function click () { //Function that prints the new quote and starts loading bar simultaneously
   newInterval();
   printQuote();
   moveBar();
+  changeColor();
 }
