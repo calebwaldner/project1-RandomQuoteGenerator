@@ -6,22 +6,27 @@ document.getElementById('loadQuote').addEventListener("click", click, false);
 console.log('Below you will find a history of the random quotes and their corresponding index number');
 
 //Variables defined
-var previousRandomNumber;
+var quoteNumber;
+var colorNumber;
 var loadingTime = 10000;
 var intervalID;
+var colorPalette = [ '#ff004f', '#0085b9', '#00b9c4', '#00df9f', '#ffe400'];
 
 moveBar(); //inital loading bar function to run when page initially loads
 intervalID = window.setInterval(click, loadingTime); //Initial interval timer that calls click function, continues to run until user clicks button
 
-function getRandomNumber(numberOfQuotes) { //Gets a random number between 0 and the parameter and returns the random number
-  do {var newRandomNumber = Math.floor( Math.random() * numberOfQuotes);
-  } while ( previousRandomNumber === newRandomNumber ); //ensures the random number is not a repeat
-  previousRandomNumber = newRandomNumber;
+function getRandomNumber(maxNumber, dontRepeat) { //Gets a random number between 0 and the parameter and returns the random number
+  do {var newRandomNumber = Math.floor( Math.random() * maxNumber);
+  } while ( dontRepeat === newRandomNumber ); //ensures the random number is not a repeat
+  dontRepeat = newRandomNumber;
   return newRandomNumber;
 }
 
-function getRandomQuote() { //Reterns a random object (quote) from array based off random number, argument is total objects (quotes) in array.
-  return quotes[getRandomNumber(quotes.length)];
+
+
+function getRandomQuote() { //Reterns a random object (quote) from array.
+  quoteNumber = getRandomNumber(quotes.length, quoteNumber);//gets random number based off lenght of quote array and previous random number (so it doesnt repeat)
+  return quotes[quoteNumber];
 }
 
 function printQuote() { //Prints random quote HTML.
@@ -64,15 +69,20 @@ function newInterval() { //ends previous interval timer and begins a new one
 }
 
 function changeColor () {
-  document.body.style.backgroundColor = 'yellow';
-  document.getElementById('loadQuote').style.backgroundColor = 'yellow';
+  document.body.style.backgroundColor = '#ffe400';
+  document.getElementById('loadQuote').style.backgroundColor = '#ffe400';
 }
 
-
+function getColor() {
+  colorNumber = getRandomNumber(colorPalette.length, colorNumber);//gets random number based off lenght of the color palette and previous random number (so it doesnt repeat)
+  console.log('color index number: ' + colorNumber);
+  return colorPalette[colorNumber];
+}
 
 function click () { //Function that prints the new quote and starts loading bar simultaneously
   newInterval();
   printQuote();
   moveBar();
   changeColor();
+  getColor();
 }
