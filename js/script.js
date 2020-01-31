@@ -5,25 +5,31 @@ document.getElementById('loadQuote').addEventListener("click", click, false);
 //Message for browser console
 console.log('Below you will find a history of the random quotes');
 
-var randomNumber = [0, 0];
-var loadingTime = 10000;
-var intervalID;
-var colorPalette = [ '#b55475', '#953735', '#dd7e0e', '#34ac8b', '#7153a1'];
+const randomNumber = [0, 0]; //used to store the random numbers. First random number used to generate quote, second for color.
+const loadingTime = 10000;
+const colorPalette = [ '#b55475', '#953735', '#dd7e0e', '#34ac8b', '#7153a1'];
+let newRandomNumber;
+let intervalID = window.setInterval(click, loadingTime); //Initial interval timer that calls click function, continues to run until user clicks button
 
-moveBar(); //initial loading bar function to run when page initially loads
-intervalID = window.setInterval(click, loadingTime); //Initial interval timer that calls click function, continues to run until user clicks button
-
-function getRandomNumber(maxNumber, dontRepeat) { //Gets a random number between 0 and the parameter and returns the random number
-  do {var newRandomNumber = Math.floor( Math.random() * maxNumber);
+const getRandomNumber = (maxNumber, dontRepeat) => { //Gets a random number between 0 and the parameter and returns the random number
+  do {newRandomNumber = Math.floor( Math.random() * maxNumber);
   } while ( dontRepeat === newRandomNumber ); //ensures the random number is not a repeat
   dontRepeat = newRandomNumber;
   return newRandomNumber;
 }
 
-function getRandomQuote() { //Returns a random object (quote) from array.
-  randomNumber[0] = getRandomNumber(quotes.length, randomNumber[0]);//gets random number based off length of quote array and previous random number (so it doesn’t repeat)
-  return quotes[randomNumber[0]];
-}
+const getRandomQuote = () => quotes[randomNumber[0] = getRandomNumber(quotes.length, randomNumber[0])];//gets and stores a quote from array based off the random number function, which gets random number based off length of quote array and previous random number (so it doesn’t repeat)
+
+
+/****************************************************************
+
+Remove this block, just temp notes.
+I was refactoring code to use let/const variables and arrow functions, I ended here, had to go.
+Also, I was looking up a website for random quotes from a third party. Here is a site I found, but didn't research long. This would also be great to do for color.
+https://www.juniordevelopercentral.com/6-random-quote-apis/
+
+****************************************************************/
+
 
 function printQuote() { //Prints random quote HTML.
   var randomQuote = getRandomQuote(); //stores random quote object in variable
@@ -80,3 +86,5 @@ function click () { //restarts interval timer, displays new quote, begins loadin
   moveBar();
   changeColor();
 }
+
+moveBar(); //initial loading bar function to run when page initially loads
