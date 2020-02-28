@@ -4,45 +4,40 @@ document.getElementById('loadQuote').addEventListener("click", click, false);
 
 //Message for browser console
 console.log('Below you will find a history of the random quotes');
+// TODO: Move this to a side popup window
 
-const randomNumber = [0, 0]; //used to store the random numbers. First random number used to generate quote, second for color.
+const randomNumber = {quoteNum: 0, colorNum: 0}; //used to store the random numbers. First random number used to generate quote, second for color.
 const loadingTime = 10000;
 const colorPalette = [ '#b55475', '#953735', '#dd7e0e', '#34ac8b', '#7153a1'];
-let newRandomNumber;
 let intervalID = window.setInterval(click, loadingTime); //Initial interval timer that calls click function, continues to run until user clicks button
 
 const getRandomNumber = (maxNumber, dontRepeat) => { //Gets a random number between 0 and the parameter and returns the random number
-  do {newRandomNumber = Math.floor( Math.random() * maxNumber);
+  let newRandomNumber;
+  do {
+    newRandomNumber = Math.floor( Math.random() * maxNumber);
   } while ( dontRepeat === newRandomNumber ); //ensures the random number is not a repeat
-  dontRepeat = newRandomNumber;
   return newRandomNumber;
 }
 
-const getRandomQuote = () => quotes[randomNumber[0] = getRandomNumber(quotes.length, randomNumber[0])];//gets and stores a quote from array based off the random number function, which gets random number based off length of quote array and previous random number (so it doesn’t repeat)
-
-
-/****************************************************************
-
-Remove this block, just temp notes.
-I was refactoring code to use let/const variables and arrow functions, I ended here, had to go.
-Also, I was looking up a website for random quotes from a third party. Here is a site I found, but didn't research long. This would also be great to do for color.
-https://www.juniordevelopercentral.com/6-random-quote-apis/
-
-****************************************************************/
-
+const getRandomQuote = () => quotes[randomNumber.quoteNum = getRandomNumber(quotes.length, randomNumber.quoteNum)];//gets and stores a quote from array based off the random number function, which gets random number based off length of quote array and previous random number (so it doesn’t repeat)
 
 function printQuote() { //Prints random quote HTML.
-  var randomQuote = getRandomQuote(); //stores random quote object in variable
-  var categoryHTML = ''; //Places category text at beginning of html string.
-  var loadingBarHTML = '<div id="loading-bar" class="loading-bar"></div>';
+  const randomQuote = getRandomQuote(); //stores random quote object in variable
+  let categoryHTML = ''; //Places category text at beginning of html string.
+  const loadingBarHTML = `<div id="loading-bar" class="loading-bar"></div>`;
   if (randomQuote.hasOwnProperty('category')) {
-    categoryHTML = '<p class="category">' + randomQuote.category + '</p>';
+    categoryHTML = `<p class="category">${randomQuote.category}</p>`;
   }
-  var html = categoryHTML + loadingBarHTML + '<p class="quote">' + randomQuote.quote + '</p>'; //Constructs html string with category, quote, and source, all with proper html tags.
-  html += '<p class="source">' + randomQuote.source;
+  let html = `${categoryHTML}${loadingBarHTML}<p class="quote">${randomQuote.quote}</p>`; //Constructs html string with category, quote, and source, all with proper html tags.
+  html += `<p class="source">${randomQuote.source}`;
   if (randomQuote.hasOwnProperty('citation')) { //Test to see if citation is present
-    html += '<span class="citation">' + randomQuote.citation + '</span>';
+    html += `<span class="citation">${randomQuote.citation}</span>`;
   }
+
+
+  ////////////////////////////////////////////////////////////////////////////////
+
+
   if (randomQuote.hasOwnProperty('year')) { //Test to see if year is present
     html += '<span class="year">' + randomQuote.year + '</span>';
   }
@@ -75,9 +70,9 @@ function changeColor () { //Changes color of body background
 }
 
 function getColor() { //returns an object from the colorPalette variable
-  randomNumber[1] = getRandomNumber(colorPalette.length, randomNumber[1]);//gets random number based off length of the color palette and previous random number (so it doesn’t repeat)
-  console.log('color index number: ' + randomNumber[1]);
-  return colorPalette[randomNumber[1]];
+  randomNumber.colorNum = getRandomNumber(colorPalette.length, randomNumber.colorNum);//gets random number based off length of the color palette and previous random number (so it doesn’t repeat)
+  console.log('color index number: ' + randomNumber.colorNum);
+  return colorPalette[randomNumber.colorNum];
 }
 
 function click () { //restarts interval timer, displays new quote, begins loading bar animation, and changes screen color, all simultaneously
@@ -88,3 +83,6 @@ function click () { //restarts interval timer, displays new quote, begins loadin
 }
 
 moveBar(); //initial loading bar function to run when page initially loads
+
+
+// TODO: Add random quotes from thrid party. One site, could research more: https://www.juniordevelopercentral.com/6-random-quote-apis/
